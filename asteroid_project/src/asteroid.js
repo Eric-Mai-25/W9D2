@@ -9,7 +9,7 @@ export default class Asteroid extends MovingObject{
         super(obj)
         this.color = Asteroid.COLOR
         this.radius = Asteroid.RADIUS
-        this.vel = Util.randomVec(1)
+        this.vel = Util.randomVec(5)
     }
 
 

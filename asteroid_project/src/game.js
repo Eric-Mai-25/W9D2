@@ -13,7 +13,7 @@ export default class Game {
     addAsteroids(n) {
         let i = 0 
         while( i < n){
-            let posObj = { pos: this.randomPosition()}
+            let posObj = { pos: this.randomPosition(), game: this}
             let ast = new Asteroid(posObj)
             this.asteroids.push( ast)
             i++
@@ -40,5 +40,43 @@ export default class Game {
         this.asteroids.forEach((ast)=>{
             ast.move()
         })
+    }
+
+    wrap(pos) {
+        if (pos[0] < 0) {
+            pos[0] = 500 -1
+        }
+        if (pos[0] > 500) {
+            pos[0] = 0 + 1
+        }
+        if (pos[1] < 0) {
+            pos[1] = 500 -1
+        }
+        if (pos[1] > 500) {
+            pos[1] = 0 + 1
+        }
+        return pos
+    }
+
+    checkCollisions() {
+        for (let i = 0; i < this.asteroids.length; i++) {
+            for (let j = i+1; j < this.asteroids.length; j++) {
+                if (this.asteroids[i].isCollideWith(this.asteroids[j])) {
+                    // alert("COLLISIONS")
+                    this.asteroids[i].collideWith(this.asteroids[j])
+                }
+            }
+            
+        }
+    }
+
+    step() {
+        this.moveObjects()
+        this.checkCollisions()
+    }
+
+    remove(asteroid) {
+        let index = this.asteroids.indexOf(asteroid)
+        this.asteroids.splice(index, 1)
     }
 }
