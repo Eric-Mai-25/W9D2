@@ -1,4 +1,5 @@
 import Asteroid from "./asteroid";
+import Ship from "./ship";
 
 export default class Game {
     static DIM_X = 500
@@ -8,6 +9,7 @@ export default class Game {
     constructor() {
         this.asteroids = []
         this.addAsteroids(Game.NUM_ASTEROIDS)
+        this.ship = new Ship
     }
 
     addAsteroids(n) {
