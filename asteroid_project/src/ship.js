@@ -4,7 +4,10 @@ export default class Ship extends MovingObject {
     static RADIUS = 25;
     static COLOR = 'limegreen'
 
-    constructor(){
-        this.vel = 0
+    constructor(obj){
+        super(obj)
+        this.color = Ship.COLOR
+        this.radius = Ship.RADIUS
+        this.vel = [0,0]
     }
 }

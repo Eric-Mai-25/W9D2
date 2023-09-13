@@ -9,7 +9,7 @@ export default class Game {
     constructor() {
         this.asteroids = []
         this.addAsteroids(Game.NUM_ASTEROIDS)
-        this.ship = new Ship
+        this.ship = new Ship({pos: this.randomPosition(), game:this})
     }
 
     addAsteroids(n) {
@@ -33,13 +33,13 @@ export default class Game {
         ctx.clearRect(0, 0 , Game.DIM_X, Game.DIM_Y)
         ctx.fillStyle = 'black';
         ctx.fillRect(0,0,Game.DIM_X, Game.DIM_Y)
-        this.asteroids.forEach((ast)=>{
+        this.allObjects().forEach((ast)=>{
             ast.draw(ctx)
         })
     }
 
     moveObjects(){
-        this.asteroids.forEach((ast)=>{
+        this.allObjects().forEach((ast)=>{
             ast.move()
         })
     }
@@ -61,11 +61,12 @@ export default class Game {
     }
 
     checkCollisions() {
-        for (let i = 0; i < this.asteroids.length; i++) {
-            for (let j = i+1; j < this.asteroids.length; j++) {
-                if (this.asteroids[i].isCollideWith(this.asteroids[j])) {
+        let allObj = this.allObjects()
+        for (let i = 0; i < allObj.length; i++) {
+            for (let j = i+1; j < allObj.length; j++) {
+                if (allObj[i].isCollideWith(allObj[j])) {
                     // alert("COLLISIONS")
-                    this.asteroids[i].collideWith(this.asteroids[j])
+                    allObj[i].collideWith(allObj[j])
                 }
             }
             
@@ -80,5 +81,9 @@ export default class Game {
     remove(asteroid) {
         let index = this.asteroids.indexOf(asteroid)
         this.asteroids.splice(index, 1)
+    }
+
+    allObjects(){
+        return this.asteroids.concat([this.ship])
     }
 }
